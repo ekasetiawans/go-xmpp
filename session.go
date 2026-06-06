@@ -108,6 +108,10 @@ func (s *Session) reset() {
 }
 
 func (s *Session) extractStreamFeatures() (f stanza.StreamFeatures) {
+	defer func(){
+		recover()
+	}()
+	
 	// extract stream features
 	if s.err = s.transport.GetDecoder().Decode(&f); s.err != nil {
 		s.err = errors.New("stream open decode features: " + s.err.Error())
